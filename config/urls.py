@@ -1,22 +1,14 @@
-"""
-URL configuration for config project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+# Importa o módulo do painel de administração (o painel de controle) pronto do Django.
 from django.contrib import admin
-from django.urls import path
 
+# Importa as ferramentas 'include' e 'path', que servem para construir e organizar os links (URLs) do seu site.
+from django.urls import include, path
+
+# Importa TUDO (todas as funções/telas) que existe dentro do arquivo views.py do seu aplicativo 'app'.
+from app.views import *
+
+# Essa é a lista oficial de rotas do seu projeto. O Django sempre olha para cá para saber qual página carregar quando alguém digita um link.
 urlpatterns = [
+    # Cria o link "seusite.com/admin/". Quando alguém acessar isso, o Django abre o painel de administração.
     path('admin/', admin.site.urls),
 ]

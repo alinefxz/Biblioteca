@@ -11,4 +11,7 @@ from app.views import *
 urlpatterns = [
     # Cria o link "seusite.com/admin/". Quando alguém acessar isso, o Django abre o painel de administração.
     path('admin/', admin.site.urls),
+    # Define a página inicial do site (quando o link for apenas o endereço, sem nada na frente).
+    # O Django vai usar a tela 'IndexView' (que criamos no views.py) e dará a essa rota o apelido de 'index'.
+    path('', IndexView.as_view(), name='index'),
 ]

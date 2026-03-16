@@ -86,3 +86,16 @@ class DeleteLivroView(View):
 
         # Redireciona o usuário de volta para a página de listagem de livros
         return redirect('livros')
+    
+class ConsultaView(View):
+
+    def get(self, request, *args, **kwargs):
+        livros = Livro.objects.all()
+        return render(request, 'livros.html', {'livros': livros})
+
+
+class ReservaView(View):
+
+    def get(self, request, *args, **kwargs):
+        reservas = Emprestimo.objects.all()
+        return render(request, 'reserva.html', {'reservas': reservas})

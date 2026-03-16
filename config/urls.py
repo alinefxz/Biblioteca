@@ -50,4 +50,25 @@ urlpatterns = [
     # Rota para a página de gêneros literários
     # Exemplo de acesso: /genero
     path('genero/', GenerosView.as_view(), name='genero'),
+    
+    
+    
+    
+    # Rota para acessar o painel administrativo do Django
+    # Exemplo de acesso: /admin
+    path('admin/', admin.site.urls),
+
+    # Rota da página principal que exibe a consulta/listagem de livros
+    # Quando acessar a URL principal "", chama a ConsultaView
+    path('', ConsultaView.as_view(), name='livros'),
+
+    # Rota para a página de reservas de livros
+    # Exemplo de acesso: /reserva
+    path('reserva/', ReservaView.as_view(), name='reserva'),
+
+    # Rota para deletar um livro específico
+    # <int:id> significa que será recebido um número inteiro na URL
+    # Esse número corresponde ao ID do livro no banco de dados
+    # Exemplo de acesso: /delete/3  → exclui o livro com id 3
+    path('delete/<int:id>/', DeleteLivroView.as_view(), name='delete'),
 ]

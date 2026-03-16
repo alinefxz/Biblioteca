@@ -124,3 +124,28 @@ class Livro(models.Model):
     class Meta:
         verbose_name = "Livro"
         verbose_name_plural = "Livros"
+        
+# ==========================================
+# TABELA: EMPRÉSTIMO / RESERVA
+# ==========================================
+class Emprestimo(models.Model):
+
+    # Liga o empréstimo ao livro que foi reservado
+    livro = models.ForeignKey(Livro, on_delete=models.CASCADE, verbose_name="Livro")
+
+    # Liga o empréstimo ao leitor que fez a reserva
+    leitor = models.ForeignKey(Leitor, on_delete=models.CASCADE, verbose_name="Leitor")
+
+    # Data em que o empréstimo foi feito
+    data_emprestimo = models.DateField(verbose_name="Data do empréstimo")
+
+    # Data prevista para devolução
+    data_devolucao = models.DateField(verbose_name="Data de devolução")
+
+    # Representação textual no painel do Django
+    def __str__(self):
+        return f'{self.livro} - {self.leitor}'
+
+    class Meta:
+        verbose_name = "Empréstimo"
+        verbose_name_plural = "Empréstimos"

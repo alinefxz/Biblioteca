@@ -20,7 +20,8 @@ from django.contrib import messages
 
 class IndexView(View):  # cria uma view chamada IndexView que herda de View
     def get(self, request, *args, **kwargs):  # método que responde às requisições GET (quando alguém acessa a página)
-        return render(request, 'index.html')  # renderiza (abre) o template index.html
+        livros = Livro.objects.all()
+        return render(request, 'index.html', {'livros': livros})  # renderiza (abre) o template index.html
 
 
 class LivrosView(View):  # view responsável pela página de livros
@@ -73,7 +74,7 @@ class DeleteLivroView(View):
     def get(self, request, id, *args, **kwargs):
 
         # Busca no banco de dados o livro que possui o id informado na URL
-        livro = Livro.objects.get(id=id)
+        livro = get_object_or_404(Livro, id=id)
 
         # Exclui o livro encontrado do banco de dados
         livro.delete()
@@ -85,7 +86,7 @@ class DeleteLivroView(View):
         )
 
         # Redireciona o usuário de volta para a página de listagem de livros
-        return redirect('livros')
+        return redirect('index')
     
 class ConsultaView(View):
 

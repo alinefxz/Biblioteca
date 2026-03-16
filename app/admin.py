@@ -16,3 +16,4 @@ admin.site.register(Editora)  # Faz a tabela de Editoras aparecer no painel
 admin.site.register(Leitor)   # Faz a tabela de Leitores aparecer no painel
 admin.site.register(Livro)    # Faz a tabela de Livros aparecer no painel
 admin.site.register(Genero)   # Faz a tabela de Gêneros aparecer no painel
+admin.site.register(Emprestimo)

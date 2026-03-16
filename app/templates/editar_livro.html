@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <!-- Define o tipo de caracteres -->
+    <meta charset="UTF-8">
+
+    <!-- Faz o site se adaptar a celular -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detalhes e Edição do Livro</title>
+
+    <!-- Importando Bootstrap para deixar a página bonita -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<div class="container mt-5">
+
+    <!-- Botão para voltar para a página inicial -->
+    <a href="/" class="btn btn-warning mb-3">Voltar para a Home</a>
+
+    <!-- Título da página -->
+    <h2>Detalhes do Livro: {{ livro.nome }}</h2>
+
+    <!-- Informações do livro -->
+    <p><strong>Nome:</strong> {{ livro.nome }}</p>
+
+    <p><strong>Autor:</strong> {{ livro.autor }}</p>
+
+    <p><strong>Editora:</strong> {{ livro.editora }}</p>
+
+    <!-- Mostra todos os gêneros do livro -->
+    <p>
+        <strong>Gênero:</strong>
+        {% for genero in livro.genero.all %}
+            {{ genero.nome }}
+            {% if not forloop.last %}
+                , 
+            {% endif %}
+        {% endfor %}
+    </p>
+
+    <!-- Preço -->
+    <p><strong>Preço:</strong> R$ {{ livro.preco }}</p>
+
+    <!-- Data de publicação -->
+    <p><strong>Data de Publicação:</strong> {{ livro.data_plub }}</p>
+
+    <!-- Status do livro -->
+    <p><strong>Status:</strong> {{ livro.status }}</p>
+
+    <!-- Título da área de edição -->
+    <h3 class="mt-4">Editar Livro</h3>
+
+    <!-- Exibição de mensagens do Django -->
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li style="color: green;"><b>{{ message }}</b></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- Formulário para editar o livro -->
+    <form method="post">
+
+        <!-- Proteção obrigatória do Django -->
+        {% csrf_token %}
+
+        <!-- Mostra o formulário automaticamente -->
+        {{ form.as_p }}
+
+        <!-- Botão para salvar alterações -->
+        <button type="submit"
+                class="btn btn-success btn-lg btn-block">
+            Salvar Edições do Livro
+        </button>
+
+    </form>
+
+</div>
+
+<!-- Scripts do Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -13,6 +13,8 @@ from django.views import View
 # Importa o sistema de mensagens para mostrar avisos na tela (ex: "Livro salvo com sucesso!").
 from django.contrib import messages
 
+from .forms import LivroForm
+
 # ==========================================
 # PÁGINA INICIAL (Index)
 # ==========================================
@@ -100,3 +102,80 @@ class ReservaView(View):
     def get(self, request, *args, **kwargs):
         reservas = Emprestimo.objects.all()
         return render(request, 'reserva.html', {'reservas': reservas})
+    
+    
+    
+    
+    
+    
+    # Classe responsável por editar um livro já existente no banco de dados
+class EditarLivroView(View):
+
+    # Define qual template HTML será usado para a página de edição
+    template_name = 'editar_livro.html'
+
+
+    # Método executado quando o usuário acessa a página via requisição GET
+    # (ou seja, quando abre a página de edição no navegador)
+    def get(self, request, id, *args, **kwargs):
+
+        # Procura no banco de dados o livro com o ID recebido pela URL
+        # Se não encontrar, retorna erro 404 automaticamente
+        livro = get_object_or_404(Livro, id=id)
+
+        # Cria um formulário preenchido com os dados atuais do livro
+        # "instance=livro" significa que o formulário já vem com os dados existentes
+        form = LivroForm(instance=livro)
+
+        # Renderiza o template HTML de edição
+        # Envia para a página:
+        # - o objeto livro
+        # - o formulário preenchido com os dados do livro
+        return render(request, self.template_name, {
+            'livro': livro,
+            'form': form
+        })
+
+
+    # Método executado quando o usuário envia o formulário (requisição POST)
+    def post(self, request, id, *args, **kwargs):
+
+        # Busca novamente o livro pelo ID recebido na URL
+        livro = get_object_or_404(Livro, id=id)
+
+        # Cria o formulário com os dados enviados pelo usuário
+        # "request.POST" contém os dados digitados
+        # "instance=livro" indica que estamos atualizando esse livro
+        form = LivroForm(request.POST, instance=livro)
+
+        # Verifica se os dados do formulário são válidos
+        if form.is_valid():
+
+            # Salva as alterações no banco de dados
+            form.save()
+
+            # Envia uma mensagem de sucesso para o usuário
+            messages.success(
+                request,
+                'As edições foram salvas com sucesso.'
+            )
+
+            # Redireciona novamente para a mesma página de edição
+            # Isso evita reenviar o formulário caso a página seja atualizada
+            return redirect('editar', id=id)
+
+        else:
+
+            # Caso existam erros no formulário
+            # envia uma mensagem de erro para o usuário
+            messages.error(
+                request,
+                'Corrija os erros no formulário antes de enviar novamente.'
+            )
+
+            # Renderiza novamente a página com o formulário
+            # mantendo os dados digitados e exibindo os erros
+            return render(request, self.template_name, {
+                'livro': livro,
+                'form': form
+            })

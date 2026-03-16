@@ -65,3 +65,24 @@ class GenerosView(View):  # view da página de gêneros de livros
     def get(self, request, *args, **kwargs):  # executa quando a página é acessada
         generos = Genero.objects.all()  # busca todos os gêneros cadastrados
         return render(request, 'genero.html', {'generos': generos})  # envia os gêneros para o template
+    
+# Classe responsável por deletar (excluir) um livro do banco de dados
+class DeleteLivroView(View):
+
+    # Método executado quando a página é acessada via requisição GET
+    def get(self, request, id, *args, **kwargs):
+
+        # Busca no banco de dados o livro que possui o id informado na URL
+        livro = Livro.objects.get(id=id)
+
+        # Exclui o livro encontrado do banco de dados
+        livro.delete()
+
+        # Envia uma mensagem de sucesso para o usuário informando que o livro foi excluído
+        messages.success(
+            request,
+            'Livro excluído com sucesso!'  # mensagem exibida após a exclusão
+        )
+
+        # Redireciona o usuário de volta para a página de listagem de livros
+        return redirect('livros')

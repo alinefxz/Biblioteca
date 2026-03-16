@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+    <!-- Define o padrão de caracteres (acentos, ç, etc.) -->
+    <meta charset="UTF-8">
+
+    <!-- Configura o layout responsivo para funcionar em celulares -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título da página que aparece na aba do navegador -->
+    <title>Página Inicial</title>
+
+    <!-- Importa o CSS do Bootstrap para estilizar a página -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+
+<body>
+
+    <!-- Barra de navegação superior -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+
+        <!-- Nome da aplicação / logo -->
+        <a class="navbar-brand" href="/">Biblioteca</a>
+
+        <!-- Botão que aparece em telas pequenas para abrir o menu -->
+        <button class="navbar-toggler" 
+                type="button"
+                data-toggle="collapse" 
+                data-target="#navbarNav"
+                aria-controls="navbarNav" 
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+
+            <!-- Ícone do botão -->
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <!-- Área que contém os itens do menu -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <!-- Lista de links do menu -->
+            <ul class="navbar-nav">
+
+                <!-- Link para a página inicial -->
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/">Home</a>
+                </li>
+
+                <!-- Link para a página de livros -->
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/livros/">Livros</a>
+                </li>
+
+                <!-- Link para a página de reservas -->
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/reserva/">Reserva</a>
+                </li>
+
+                <!-- Link para a página de cidades -->
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/cidade/">Cidade</a>
+                </li>
+
+                <!-- Link para a página de autores -->
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/autor/">Autor</a>
+                </li>
+
+                <!-- Link para a página de editoras -->
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/editor/">Editora</a>
+                </li>
+
+                <!-- Link para a página de gêneros -->
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/genero/">Genero</a>
+                </li>
+
+                <!-- Link para a página de leitores -->
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/leitor/">Leitor</a>
+                </li>
+
+                <!-- Link para acessar o painel administrativo do Django -->
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/admin/">Administração</a>
+                </li>
+
+            </ul>
+
+        </div>
+    </nav>
+
+
+    <!-- Container principal da página (Bootstrap centraliza e organiza o conteúdo) -->
+    <div class="container mt-5">
+
+        <!-- Título da tabela -->
+        <h2 class="mb-4">Tabela de Livros</h2>
+
+        <!-- Tabela que exibirá os livros cadastrados -->
+        <table class="table">
+
+            <!-- Cabeçalho da tabela -->
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Autor</th>
+                    <th scope="col">Editora</th>
+                    <th scope="col">Gênero</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Data Publicação</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+
+            <!-- Corpo da tabela -->
+            <tbody>
+
+                <!-- Loop do Django: percorre todos os livros enviados pela view -->
+                {% for livros in livros %}
+
+                <tr>
+
+                    <!-- Exibe o nome do livro -->
+                    <td>{{ livros.nome }}</td>
+
+                    <!-- Exibe o autor -->
+                    <td>{{ livros.autor }}</td>
+
+                    <!-- Exibe a editora -->
+                    <td>{{ livros.editora }}</td>
+
+                    <!-- Exibe o gênero -->
+                    <td>{{ livros.genero }}</td>
+
+                    <!-- Exibe o preço -->
+                    <td>{{ livros.preco }}</td>
+
+                    <!-- Exibe a data de publicação -->
+                    <td>{{ livros.data_plub }}</td>
+
+                    <!-- Exibe o status do livro (ex: disponível, emprestado) -->
+                    <td>{{ livros.status }}</td>
+
+                </tr>
+
+                <!-- Final do loop -->
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <!-- Importa jQuery (necessário para algumas funções do Bootstrap 4) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <!-- Importa Popper.js (usado para tooltips e dropdowns do Bootstrap) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+
+    <!-- Importa o JavaScript do Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

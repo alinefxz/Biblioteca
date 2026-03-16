@@ -17,15 +17,51 @@ from django.contrib import messages
 # PÁGINA INICIAL (Index)
 # ==========================================
 # Cria a página principal do site, chamando ela de 'IndexView'. Ela usa a base 'View' do Django.
-class IndexView(View):
-    
-    # O método GET define o que acontece quando o usuário simplesmente acessa o link da página no navegador.
-    def get(self, request, *args, **kwargs):
-        # Manda o Django procurar o arquivo 'index.html' (na pasta templates) e mostrar para o usuário.
-        return render(request, 'index.html')
 
-    # O método POST define o que acontece quando o usuário envia dados escondidos (ex: clica em "Salvar" num formulário).
-    def post(self, request):
-        # O 'pass' significa "passe reto" ou "não faça nada por enquanto". 
-        # É só um espaço reservado para você escrever o código de salvar o formulário no futuro.
-        pass
+class IndexView(View):  # cria uma view chamada IndexView que herda de View
+    def get(self, request, *args, **kwargs):  # método que responde às requisições GET (quando alguém acessa a página)
+        return render(request, 'index.html')  # renderiza (abre) o template index.html
+
+
+class LivrosView(View):  # view responsável pela página de livros
+    def get(self, request, *args, **kwargs):  # executa quando a página é acessada
+        livros = Livro.objects.all()  # busca todos os registros do modelo Livro no banco de dados
+        return render(request, 'livros.html', {'livros': livros})  # envia os livros para o template livros.html
+
+    # def post(self, request, *args, **kwargs):  # método comentado que seria usado para requisições POST (ex: envio de formulário)
+
+
+class EmprestimoView(View):  # view responsável pela página de empréstimos/reservas
+    def get(self, request, *args, **kwargs):  # executa quando a página é acessada
+        reservas = Emprestimo.objects.all()  # busca todos os registros do modelo Emprestimo
+        return render(request, 'reserva.html', {'reservas': reservas})  # envia os dados para o template reserva.html
+
+
+class CidadesView(View):  # view da página de cidades
+    def get(self, request, *args, **kwargs):  # executa quando a página é acessada
+        cidades = Cidade.objects.all()  # busca todas as cidades cadastradas no banco
+        return render(request, 'cidade.html', {'cidades': cidades})  # envia a lista de cidades para o template
+
+
+class AutoresView(View):  # view da página de autores
+    def get(self, request, *args, **kwargs):  # executa quando a página é acessada
+        autores = Autor.objects.all()  # busca todos os autores no banco
+        return render(request, 'autor.html', {'autores': autores})  # envia os autores para o template
+
+
+class EditorasView(View):  # view da página de editoras
+    def get(self, request, *args, **kwargs):  # executa quando a página é acessada
+        editoras = Editora.objects.all()  # busca todas as editoras cadastradas
+        return render(request, 'editora.html', {'editoras': editoras})  # envia os dados para o template
+
+
+class LeitoresView(View):  # view da página de leitores
+    def get(self, request, *args, **kwargs):  # executa quando a página é acessada
+        leitores = Leitor.objects.all()  # busca todos os leitores no banco
+        return render(request, 'leitor.html', {'leitores': leitores})  # envia os leitores para o template
+
+
+class GenerosView(View):  # view da página de gêneros de livros
+    def get(self, request, *args, **kwargs):  # executa quando a página é acessada
+        generos = Genero.objects.all()  # busca todos os gêneros cadastrados
+        return render(request, 'genero.html', {'generos': generos})  # envia os gêneros para o template

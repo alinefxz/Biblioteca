@@ -1,19 +1,37 @@
 # Importa as ferramentas do painel de administração padrão do Django.
 from django.contrib import admin
 
-# Importa TUDO (todas as tabelas/classes) do arquivo models.py que está na mesma pasta (por isso o ponto antes de models).
+# Importa todos os models
 from .models import *
 
 # ==========================================
-# REGISTRO DAS TABELAS NO PAINEL
+# INLINE (Livro dentro do Autor)
 # ==========================================
-# Os comandos abaixo pegam as tabelas que você criou no models.py e as "cadastram" no painel azul do Django.
-# Sem essas linhas, as tabelas existem no banco de dados, mas não aparecem na tela do site para você gerenciar.
+class LivroInline(admin.TabularInline):
+    model = Livro
+    extra = 1 #Número de livros adicionais para adicionar no admin
 
-admin.site.register(Cidade)   # Faz a tabela de Cidades aparecer no painel
-admin.site.register(Autor)    # Faz a tabela de Autores aparecer no painel
-admin.site.register(Editora)  # Faz a tabela de Editoras aparecer no painel
-admin.site.register(Leitor)   # Faz a tabela de Leitores aparecer no painel
-admin.site.register(Livro)    # Faz a tabela de Livros aparecer no painel
-admin.site.register(Genero)   # Faz a tabela de Gêneros aparecer no painel
+
+# ==========================================
+# PERSONALIZAÇÃO DO AUTOR
+# ==========================================
+class AutorAdmin(admin.ModelAdmin):
+    list_display = ('nome',) #Campos que serão exibidos na listagem
+    search_fields = ('nome',) #Campos que serão pesquisados
+    inlines = [LivroInline] #Add a tabela de livros no admin de gêneros
+
+
+# ==========================================
+# REGISTRO DAS TABELAS
+# ==========================================
+admin.site.register(Cidade)
+admin.site.register(Editora)
+admin.site.register(Leitor)
+admin.site.register(Genero)
 admin.site.register(Emprestimo)
+
+# ⚠️ IMPORTANTE:
+# Autor e Livro são registrados aqui embaixo corretamente
+
+admin.site.register(Livro)
+admin.site.register(Autor, AutorAdmin)
